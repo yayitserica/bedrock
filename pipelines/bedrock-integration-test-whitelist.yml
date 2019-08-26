@@ -1,25 +1,25 @@
 steps:
 - script: |
-  MASTER="remotes/origin/master"
-  GIT_DIFF_SOURCEBRANCH="HEAD"
+    MASTER="remotes/origin/master"
+    GIT_DIFF_SOURCEBRANCH="HEAD"
 
-  # we should always use master as a comparison, except in the case that this is
-  # a build for master. In this case we can use HEAD~ (1 commit behind master)
-  # because all merges will be squash merges
-  if [[ $(git diff "$MASTER") ]]; then
-      GIT_DIFF_UPSTREAMBRANCH="$MASTER"
-  else
-      GIT_DIFF_UPSTREAMBRANCH="$MASTER~"
-  fi
+    # we should always use master as a comparison, except in the case that this is
+    # a build for master. In this case we can use HEAD~ (1 commit behind master)
+    # because all merges will be squash merges
+    if [[ $(git diff "$MASTER") ]]; then
+        GIT_DIFF_UPSTREAMBRANCH="$MASTER"
+    else
+        GIT_DIFF_UPSTREAMBRANCH="$MASTER~"
+    fi
 
-  echo "GIT_DIFF_UPSTREAMBRANCH: $GIT_DIFF_UPSTREAMBRANCH"
-  echo "GIT_DIFF_SOURCEBRANCH: $GIT_DIFF_SOURCEBRANCH"
+    echo "GIT_DIFF_UPSTREAMBRANCH: $GIT_DIFF_UPSTREAMBRANCH"
+    echo "GIT_DIFF_SOURCEBRANCH: $GIT_DIFF_SOURCEBRANCH"
 
-  FILE_CHANGE_SET=$(git diff "$GIT_DIFF_SOURCEBRANCH" "$GIT_DIFF_UPSTREAMBRANCH" --name-only)
-  echo "Files changed since last commit..."
-  echo "$FILE_CHANGE_SET"
+    FILE_CHANGE_SET=$(git diff "$GIT_DIFF_SOURCEBRANCH" "$GIT_DIFF_UPSTREAMBRANCH" --name-only)
+    echo "Files changed since last commit..."
+    echo "$FILE_CHANGE_SET"
 
 
 
-    
+      
   displayName: 'Bedrock Whitelist Integration Test'
