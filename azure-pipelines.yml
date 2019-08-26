@@ -85,6 +85,7 @@ stages:
         fi
       workingDirectory: '$(modulePath)/cluster'
       displayName: 'Terraform lint check'
+    - template: pipelines/bedrock-integration-test-whitelist.yml
 
 - stage: Bedrock_Integration_Test_Validation
   jobs:
