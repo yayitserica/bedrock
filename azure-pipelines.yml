@@ -5,7 +5,6 @@ trigger:
     - master
     - azure-pipelines
     - bedrock-testing-v2
-    - bedrock_testing
   paths:
     include:
     - /cluster/azure/*
