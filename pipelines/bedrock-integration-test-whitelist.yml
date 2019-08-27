@@ -26,10 +26,10 @@ steps:
     FILE_CHANGE_SET=$(git diff "$GIT_DIFF_SOURCEBRANCH" "$GIT_DIFF_UPSTREAMBRANCH" --name-only)
     echo "Files changed since last commit..."
     echo "$FILE_CHANGE_SET"
-    
+
     # if git diff detects commits made to cluster/azure and cluster/common and test/ and tools/ paths
     # perform all environment integration tests
-    if [[ ! -z "$(echo $FILE_CHANGE_SET | grep -e "cluster/azure|cluster/common|test/|tools/")" ]]; then
+    if [[ ! -z "$(echo $FILE_CHANGE_SET | grep -e "cluster/azure|cluster/common|test/|tools/|pipelines")" ]]; then
         echo "Performing all tests."
         echo $ALL_IT_TESTS
         ALL_IT_TESTS=true
