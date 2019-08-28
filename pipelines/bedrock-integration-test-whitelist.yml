@@ -29,11 +29,10 @@ steps:
 
     # if git diff detects commits made to cluster/azure and cluster/common and test/ and tools/ paths
     # perform all environment integration tests
-    if [[ ! -z "$(echo $FILE_CHANGE_SET | grep -e "cluster/azure|cluster/common|test/|tools/|pipelines")" ]]; then
+    if [[ ! -z "$(echo $FILE_CHANGE_SET | grep -e "cluster/azure\|cluster/common\|test/\|tools/\|pipelines")" ]]; then
         echo "Performing all tests."
         echo $ALL_IT_TESTS
         ALL_IT_TESTS=true
-        echo "##vso[task.setvariable variable=ALL_IT_TESTS;isOutput=true]$ALL_IT_TESTS"
         echo $ALL_IT_TESTS
     else
         # if git diff detects commits made to only 'azure-simple' path, run azure-simple integration test
@@ -41,7 +40,6 @@ steps:
             echo "The Azure Simple Integration test will run."
             echo $AZ_SIMPLE_TEST
             AZ_SIMPLE_TEST=true
-            echo "##vso[task.setvariable variable=AZ_SIMPLE_TEST;isOutput=true]$AZ_SIMPLE_TEST"
             echo $AZ_SIMPLE_TEST
 
         fi
@@ -53,8 +51,6 @@ steps:
             AZ_COMMON_KV_TEST=true
             AZ_COMMON_MC_TEST=true
             # Set All Environment Templates affected by Common Environment modification
-            echo "##vso[task.setvariable variable=AZ_COMMON_KV_TEST;isOutput=true]$AZ_COMMON_KV_TEST"
-            echo "##vso[task.setvariable variable=AZ_COMMON_MC_TEST;isOutput=true]$AZ_COMMON_MC_TEST"
             echo $AZ_COMMON_KV_TEST
         fi
         # if git diff detects commits made to 'azure-single-keyvault' path, run azure-single-keyvault
@@ -63,7 +59,6 @@ steps:
             echo "The Azure Single Keyvault test will run."
             echo $AZ_COMMON_KV_TEST
             AZ_COMMON_KV_TEST=true
-            echo "##vso[task.setvariable variable=AZ_COMMON_KV_TEST;isOutput=true]$AZ_COMMON_KV_TEST"
             echo $AZ_COMMON_KV_TEST
         fi
         # if git diff detects commits made to 'azure-multiple-clusters' path, run azure-multiple-clusters
@@ -72,9 +67,12 @@ steps:
             echo "The Azure Multiple Cluster test will run."
             echo $AZ_COMMON_MC_TEST
             AZ_COMMON_MC_TEST=true
-            echo "##vso[task.setvariable variable=AZ_COMMON_MC_TEST;isOutput=true]$AZ_COMMON_MC_TEST"
             echo $AZ_COMMON_MC_TEST
         fi
     fi
+    echo "##vso[task.setvariable variable=ALL_IT_TESTS;isOutput=true]$ALL_IT_TESTS"
+    echo "##vso[task.setvariable variable=AZ_SIMPLE_TEST;isOutput=true]$AZ_SIMPLE_TEST"
+    echo "##vso[task.setvariable variable=AZ_COMMON_KV_TEST;isOutput=true]$AZ_COMMON_KV_TEST"
+    echo "##vso[task.setvariable variable=AZ_COMMON_MC_TEST;isOutput=true]$AZ_COMMON_MC_TEST"
   displayName: 'Bedrock Whitelist Integration Test'
   name: Whitelist_Bedrock
